@@ -3,20 +3,20 @@ package device_management;
 import Behaviours.IInput;
 import Behaviours.IOutput;
 
+import java.util.ArrayList;
+
 public class Computer {
     private int ram;
     private int hddSize;
-
-    private IOutput outputDevice;
-    private IInput inputDevice;
-
+    private ArrayList<IOutput> outputDevices;
+    private ArrayList<IInput> inputDevices;
 
 
-    public Computer(int ram, int hddSize, IOutput outputDevice, IInput inputDevice) {
+    public Computer(int ram, int hddSize) {
         this.ram = ram;
         this.hddSize = hddSize;
-        this.outputDevice = outputDevice;
-        this.inputDevice = inputDevice;
+        this.outputDevices = new ArrayList<>();
+        this.inputDevices = new ArrayList<>();
     }
 
     public int getRam() {
@@ -27,27 +27,54 @@ public class Computer {
         return this.hddSize;
     }
 
-    public IOutput getOutputDevice() {
-        return this.outputDevice;
+    public IOutput getOutputDevice(IOutput output) {
+        IOutput finaloutput = null;
+        for (IOutput outputvar : outputDevices){
+            if (outputvar == output) {
+                finaloutput = outputvar;
+            }
+        }
+        return finaloutput;
     }
 
-    public String outputData(String data) {
-        return this.outputDevice.outputData(data);
+    public IOutput outputData(IOutput output) {
+        return getOutputDevice(output);
     }
 
-    public String inputData(String data){
-        return this.inputDevice.inputData(data);
+
+    public IInput getInputDevice(IInput input) {
+        for(IInput inputvar : inputDevices){
+            if (inputvar == input){
+                return inputvar;
+            }
+        }
+        return null;
     }
 
-    public void setOutputDevice(IOutput outputDevice) {
-        this.outputDevice = outputDevice;
+    public IInput inputData(IInput input){
+        return getInputDevice(input);
     }
 
-    public IInput getInputDevice() {
-        return inputDevice;
+
+
+    public void addToInputDevices(IInput input){
+        inputDevices.add(input);
     }
 
-    public void setInputDevice(IInput inputDevice) {
-        this.inputDevice = inputDevice;
+    public void addToOutputDevices(IOutput output){
+        outputDevices.add(output);
     }
+
+
+
+
+//    public void setOutputDevice(IOutput outputDevice) {
+//        this.getOutputDevice() = outputDevices;
+//    }
+
+
+
+//    public void setInputDevice(IInput inputDevice) {
+//        this.inputDevice = inputDevice;
+//    }
 }
