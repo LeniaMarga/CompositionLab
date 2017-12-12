@@ -1,8 +1,5 @@
 import Behaviours.IOutput;
-import device_management.Computer;
-import device_management.Monitor;
-import device_management.Printer;
-import device_management.Speaker;
+import device_management.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,11 +9,13 @@ import static org.junit.Assert.assertNotNull;
 public class ComputerTest {
     Computer computer;
     Monitor monitor;
+    Mouse mouse;
 
     @Before
     public void before() {
         monitor = new Monitor(22, 786432);
-        computer = new Computer(8, 512, monitor);
+        mouse = new Mouse("Cool Mouse", 4);
+        computer = new Computer(8, 512, monitor, mouse);
     }
 
     @Test
@@ -44,7 +43,8 @@ public class ComputerTest {
     @Test
     public void canOutputDataViaSpeaker(){
         Speaker speaker = new Speaker(4);
-        computer = new Computer(8, 512, speaker);
+        Mouse mouse = new Mouse("Cool Mouse", 4);
+        computer = new Computer(8, 512, speaker, mouse);
         assertEquals("playing: Foo Fighters", computer.outputData("Foo Fighters"));
     }
 
@@ -56,7 +56,8 @@ public class ComputerTest {
     @Test
     public void canOutputDataViaPrinter(){
         Printer printer = new Printer("Epson", "Stylus", 120, 4);
-        computer = new Computer(8, 512, printer);
+        Mouse mouse = new Mouse("Cool Mouse", 4);
+        computer = new Computer(8, 512, printer, mouse);
         assertEquals("printing: space invaders", computer.outputData("space invaders"));
     }
 
@@ -65,5 +66,20 @@ public class ComputerTest {
         Printer printer = new Printer("Epson", "Stylus", 120, 4);
         computer.setOutputDevice(printer);
         assertEquals("printing: space invaders", computer.outputData("space invaders"));
+    }
+
+    @Test
+    public void canInputData(){
+        Mouse mouse = new Mouse("Cool Mouse", 4);
+        Printer printer = new Printer("Epson", "Stylus", 120, 4);
+        computer = new Computer(8, 512, printer, mouse);
+    }
+
+    @Test
+    public void canSetInputData(){
+        Keyboard keyboard = new Keyboard("English");
+        computer.setInputDevice(keyboard);
+        assertEquals("bananas", computer.inputData("bananas"));
+
     }
 }
